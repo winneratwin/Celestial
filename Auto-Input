@@ -30,7 +30,7 @@ local Mouse = LocalPlayer:GetMouse()
 getgenv().methodsTable = {"Ray", "Raycast", "FindPartOnRay", "FindPartOnRayWithIgnoreList", "FindPartOnRayWithWhitelist"}
 getgenv().SelectedPart = "Head"
 getgenv().FOV = 250
-getgenv().Distance = 200
+getgenv().Distance = 2000
 
 --// RIG TYPE \\--
 
