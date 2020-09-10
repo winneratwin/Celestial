@@ -49,7 +49,6 @@ local Camera = workspace.CurrentCamera
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 PlayerGui:SetTopbarTransparency(1)
 local Mouse = LocalPlayer:GetMouse()
-getgenv().SelectedPart = "Head"
 getgenv().FOV = 250
 getgenv().Distance = 500
 
