@@ -50,8 +50,6 @@ local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 PlayerGui:SetTopbarTransparency(1)
 local Mouse = LocalPlayer:GetMouse()
 getgenv().SelectedPart = "Head"
-getgenv().VisibiltyCheck = false
-getgenv().TargetESP = true
 getgenv().FOV = 250
 getgenv().Distance = 500
 
