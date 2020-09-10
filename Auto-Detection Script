@@ -1,1 +1,28 @@
--- TEST --
+local mt = getrawmetatable(game)
+setreadonly(mt, false) 
+local namecall = mt.__namecall
+local methodsTable = {"Ray", "Raycast", "FindPartOnRay", "FindPartOnRayWithIgnoreList", "FindPartOnRayWithWhitelist"}
+getgenv().Detect = true
+
+mt.__namecall = newcclosure(function(...)
+    local method = getnamecallmethod()
+    local args = {...}
+    for _, raymethod in next, methodsTable do
+        if string.find(method, 'Ray') and _G.IsMouseButtonPressed == true and getgenv().Detect == true then
+            if tostring(method) == raymethod then
+                getgenv().RayMethod = raymethod
+            end
+        else
+        end
+    end
+    return namecall(unpack(args))
+end)
+
+game:GetService("RunService"):BindToRenderStep("IsMouseButtonPressed",1,function()
+    if game:GetService("UserInputService"):IsMouseButtonPressed(0) then
+        _G.IsMouseButtonPressed = true
+        print(getgenv().RayMethod)
+    else
+        _G.IsMouseButtonPressed = false
+    end
+end)
