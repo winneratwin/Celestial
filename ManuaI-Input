@@ -376,6 +376,16 @@ local rigTypeAceOfSpadez = {
 	["Torso"] = true
 }
 
+local rigTypeStandardIssue = {
+	["lowerrightleg"] = true,
+	["leftforearm"] = true,
+	["lowerleftleg"] = true,
+	["waist"] = true,
+	["Torso"] = true,
+	["rightforearm"] = true,
+	["Head"] = true,
+}
+
 local rigTypeRecoil = {
     ["Head"] = true,
 	["LeftFoot"] = true,
@@ -412,6 +422,28 @@ local rigTypePloyguns = {
 	["Mid"] = true
 }
 
+local rigTypeKineticCode = {
+    ["UpperTorso"] = true,
+	["Head"] = true,
+	["Hips"] = true,
+	["LeftArm"] = true,
+	["LeftFoot"] = true,
+    ["LeftHip"] = true,
+    ["LeftKnuckles"] = true,
+    ["LeftLeg"] = true,
+    ["LeftPalm"] = true,
+    ["LeftShoulder"] = true,
+    ["LowerTorso"] = true,
+    ["Neck"] = true,
+    ["RightArm"] = true,
+    ["RightFoot"] = true,
+    ["RightHip"] = true,
+    ["RightKnuckles"] = true,
+    ["RightLeg"] = true,
+    ["RightPalm"] = true,
+    ["RightShoulder"] = true
+}
+
 if PlaceId == 2377868063 then
     selected_rigType = rigTypeStrucid
 elseif PlaceId == 2555870920 then
@@ -429,6 +461,8 @@ elseif PlaceId == 4738545896 then
 elseif PlaceId == 3210442546 then
     selected_rigType = rigTypeR15
     selected_teamType = "IslandRoyale"
+elseif PlaceId == 401356052 then
+    selected_rigType = rigTypeKineticCode
 elseif rigType == "R6" then
     selected_rigType = rigTypeR6
 elseif rigType == "R15" then
@@ -473,8 +507,14 @@ local function teamType(player)
 end
 
 local function characterType(player)
-    if player.Character or workspace:FindFirstChild(player.Name) then
-        local playerCharacter = player.Character or workspace:FindFirstChild(player.Name)
+    playerName = player.Name
+    if PlaceId == 401356052 then
+        if workspace["Players"][playerName] or workspace["Players"]:WaitForChild(player) then
+            local playerCharacter = workspace["Players"][playerName] or workspace["Players"]:WaitForChild(player)
+            return playerCharacter
+        end
+    elseif player.Character or workspace:FindFirstChild(playerName) then
+        local playerCharacter = player.Character or workspace:FindFirstChild(playerName)
         return playerCharacter
     end
 end
@@ -511,9 +551,8 @@ local function returnVisibility(player)
                 end 
             end
         end
-    else
-        return true
     end
+    return true
 end
 
 local function returnRay(args, hit)
@@ -530,6 +569,8 @@ local function returnRay(args, hit)
 end
 
 print("FFA: " .. tostring(FFA()))
+print("Visibility Check: " .. tostring(getgenv().VisibiltyCheck))
+print("Target ESP: " .. tostring(getgenv().VisibiltyCheck))
 
 local function createBox(player)
     local folder = Instance.new("Folder")
