@@ -28,8 +28,6 @@ local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 PlayerGui:SetTopbarTransparency(1)
 local Mouse = LocalPlayer:GetMouse()
 getgenv().methodsTable = {"Ray", "Raycast", "FindPartOnRay", "FindPartOnRayWithIgnoreList", "FindPartOnRayWithWhitelist"}
-getgenv().FOV = 250
-getgenv().Distance = 2000
 
 --// RIG TYPE \\--
 
