@@ -509,10 +509,10 @@ spawn(function()
     RunServ:BindToRenderStep("Get_Fov",1,function()
         local Length = 10
         local Middle = 37
-        Circle.Visible = true
-        TargetText.Visible = true
-        lineX.Visible = true
-        lineY.Visible = true
+        Circle.Visible = getgenv().CircleVisibility
+        TargetText.Visible = getgenv().CircleVisibility
+        lineX.Visible = getgenv().CircleVisibility
+        lineY.Visible = getgenv().CircleVisibility 
         Circle.Color = getgenv().Rainbow
         --TargetText.Color = getgenv().Rainbow
         lineX.Color = getgenv().Rainbow
