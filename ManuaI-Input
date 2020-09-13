@@ -752,7 +752,7 @@ spawn(function()
     local Circle = Drawing.new('Circle')
     Circle.Transparency = 1
     Circle.Thickness = 1.5
-    Circle.Visible = true
+    Circle.Visible = false
     Circle.Color = Color3.fromRGB(255,0,0)
     Circle.Filled = false
     Circle.Radius = getgenv().FOV
@@ -762,40 +762,42 @@ spawn(function()
     TargetText.Text = ""
     TargetText.Size = 17
     TargetText.Center = true
-    TargetText.Visible = true
+    TargetText.Visible = false
     TargetText.Color = Color3.fromRGB(255,0,0)
     TargetText.Font = Drawing.Fonts.Monospace
 
     local lineX = Drawing.new("Line")
     lineX.Transparency = 1
     lineX.Thickness = 1.5
-    lineX.Visible = true
+    lineX.Visible = false
     lineX.Color = Color3.fromRGB(255,0,0)
 
     local lineY = Drawing.new("Line")
     lineX.Transparency = 1
     lineY.Thickness = 1.5
-    lineY.Visible = true
+    lineY.Visible = false
     lineY.Color = Color3.fromRGB(255,0,0)
 
     RunServ:BindToRenderStep("Get_Fov",1,function()
-        local Length = 10
-        local Middle = 37
-        Circle.Visible = getgenv().Loaded
-        TargetText.Visible = getgenv().Loaded
-        lineX.Visible = getgenv().Loaded
-        lineY.Visible = getgenv().Loaded
-        Circle.Color = getgenv().Rainbow
-        --TargetText.Color = getgenv().Rainbow
-        lineX.Color = getgenv().Rainbow
-        lineY.Color = getgenv().Rainbow
-        Circle.Position = Vector2.new(Mouse.X,Mouse.Y+Middle)
-        TargetText.Position = Vector2.new(Mouse.X,Mouse.Y+Middle-180)
-        lineX.From = Vector2.new((Mouse.X)+Length+1,Mouse.Y-0.5+Middle)
-        lineX.To = Vector2.new(Mouse.X-Length,Mouse.Y-0.5+Middle)
-        lineY.From = Vector2.new(Mouse.X,Mouse.Y+Length+Middle)
-        lineY.To = Vector2.new(Mouse.X,Mouse.Y-Length+Middle)
-        TargetText.Text = getgenv().SelectedTarget
+        if getgenv().Loaded == true then
+            local Length = 10
+            local Middle = 37
+            Circle.Visible = getgenv().CircleVisibility
+            TargetText.Visible = getgenv().CircleVisibility
+            lineX.Visible = getgenv().CircleVisibility
+            lineY.Visible = getgenv().CircleVisibility 
+            Circle.Color = getgenv().Rainbow
+            --TargetText.Color = getgenv().Rainbow
+            lineX.Color = getgenv().Rainbow
+            lineY.Color = getgenv().Rainbow
+            Circle.Position = Vector2.new(Mouse.X,Mouse.Y+Middle)
+            TargetText.Position = Vector2.new(Mouse.X,Mouse.Y+Middle-180)
+            lineX.From = Vector2.new((Mouse.X)+Length+1,Mouse.Y-0.5+Middle)
+            lineX.To = Vector2.new(Mouse.X-Length,Mouse.Y-0.5+Middle)
+            lineY.From = Vector2.new(Mouse.X,Mouse.Y+Length+Middle)
+            lineY.To = Vector2.new(Mouse.X,Mouse.Y-Length+Middle)
+            TargetText.Text = getgenv().SelectedTarget
+        end
     end)
 end)
 
