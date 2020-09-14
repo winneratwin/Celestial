@@ -10,15 +10,11 @@ https://v3rmillion.net/member.php?action=profile&uid=557102
 https://v3rmillion.net/member.php?action=profile&uid=490270
 --]]
 
---// SERVICES \\--
-
 local Players = game:GetService("Players")
 local UserInput = game:GetService("UserInputService")
 local HTTP = game:GetService("HttpService")
 local RunServ = game:GetService("RunService")
 local CoreGui = game:GetService("CoreGui")
-
---// VARIABLES \\--
 
 local PlaceId = game.PlaceId
 local LocalPlayer = Players.LocalPlayer
@@ -28,8 +24,6 @@ local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 PlayerGui:SetTopbarTransparency(1)
 local Mouse = LocalPlayer:GetMouse()
 getgenv().methodsTable = {"Ray", "Raycast", "FindPartOnRay", "FindPartOnRayWithIgnoreList", "FindPartOnRayWithWhitelist"}
-
---// RIG TYPE \\--
 
 if LocalPlayer.Character then
     print("Character: Found")
@@ -260,7 +254,7 @@ local function FFA()
 end
 
 local function returnVisibility(player)
-    if getgenv().VisibiltyCheck == true then
+    if getgenv().VisibiltyCheck then
         for _, Player in next, Players:GetPlayers() do 
             if Player == player then 
                 if Player.Character then 
@@ -268,9 +262,7 @@ local function returnVisibility(player)
                         CastPoint = {LocalPlayer.Character[getgenv().SelectedPart].Position, Player.Character[getgenv().SelectedPart].Position}
                         IgnoreList = {Player.Character, LocalPlayer.Character}
                         local castpointparts = workspace.CurrentCamera:GetPartsObscuringTarget(CastPoint, IgnoreList)
-                        if unpack(castpointparts) == nil then
-                            return true
-                        else
+                        if unpack(castpointparts) then
                             return false
                         end
                     end     
@@ -403,7 +395,7 @@ local function updateEsp(player, folder)
             local yMin = Camera.ViewportSize.Y
             local xMax = 0
             local yMax = 0
-            if returnVisibility(player) == true and teamType(player) ~= teamType(LocalPlayer) or FFA() == true and returnVisibility(player) == true then
+            if returnVisibility(player) and teamType(player) ~= teamType(LocalPlayer) or FFA() and returnVisibility(player) then
                 if player ~= LocalPlayer and player == getTarget() and playerCharacter and playerCharacter:FindFirstChild("Humanoid") and playerCharacter.Humanoid.Health > 0 then
                     local _, onScreen = Camera:WorldToScreenPoint(playerCharacter[getgenv().SelectedPart].Position)
                     if onScreen then
@@ -514,7 +506,6 @@ spawn(function()
         lineX.Visible = getgenv().CircleVisibility
         lineY.Visible = getgenv().CircleVisibility 
         Circle.Color = getgenv().Rainbow
-        --TargetText.Color = getgenv().Rainbow
         lineX.Color = getgenv().Rainbow
         lineY.Color = getgenv().Rainbow
         Circle.Position = Vector2.new(Mouse.X,Mouse.Y+Middle)
@@ -532,7 +523,7 @@ function getTarget()
 	local Target = nil
 
 	for _, Player in next, Players:GetPlayers() do
-        if Player ~= LocalPlayer and returnVisibility(Player) == true and teamType(Player) ~= teamType(LocalPlayer) or FFA() == true and Player ~= LocalPlayer and returnVisibility(Player) == true then
+        if Player ~= LocalPlayer and returnVisibility(Player) and teamType(Player) ~= teamType(LocalPlayer) or FFA() and Player ~= LocalPlayer and returnVisibility(Player) then
             local playerCharacter = characterType(Player)
             if playerCharacter then
                 local playerHumanoid = playerCharacter:FindFirstChild("Humanoid")
@@ -557,8 +548,6 @@ function getTarget()
 	end
 	return Target
 end
-
---// CLOSURE \\--
 
 local mt = getrawmetatable(game)
 setreadonly(mt, false)
@@ -597,8 +586,6 @@ hookfunc = hookfunction(workspace.FindPartOnRayWithIgnoreList, function(...)
     return hookfunc(unpack(args))
 end)
 
---// ESP \\--
-
 fovVal = Instance.new("ObjectValue", game)
 fovVal.Changed:Connect(function(player)
     if CoreGui:FindFirstChild("Get_ESP", true) then
@@ -612,7 +599,7 @@ fovVal.Changed:Connect(function(player)
         Instance.new("Folder", ScreenGui)
     end
     for _, Player in next, Players:GetPlayers() do
-        if Player == player and Player.Character.Humanoid.Health > 0 and getgenv().TargetESP == true then
+        if Player == player and Player.Character.Humanoid.Health > 0 and getgenv().TargetESP then
             wait()
             espBox = createBox(Player)
             updateEsp(Player, espBox)
@@ -621,11 +608,9 @@ fovVal.Changed:Connect(function(player)
     end
 end)
 
---// SILENT AIM \\--
-
 RunServ:BindToRenderStep("Get_Target",1,function()
     local Target = getTarget()
-    if Target == nil then
+    if not Target then
         Hit = nil
         getgenv().SelectedTarget = ""
         fovVal.Value = nil
