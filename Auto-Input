@@ -378,7 +378,7 @@ end
 local function updateEsp(player, folder)
     spawn(function()
         RunServ:BindToRenderStep("Get_Target_ESP", 1, function()
-            local box = folder:FindFirstChild(player.Name)
+            local box = folder:WaitForChild(player.Name)
             local playerCharacter = characterType(player)
             local xMin = Camera.ViewportSize.X
             local yMin = Camera.ViewportSize.Y
