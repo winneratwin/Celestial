@@ -378,13 +378,13 @@ end
 local function updateEsp(player, folder)
     spawn(function()
         RunServ:BindToRenderStep("Get_Target_ESP", 1, function()
-            local box = folder:WaitForChild(player.Name)
+            local box = folder:FindFirstChild(player.Name)
             local playerCharacter = characterType(player)
             local xMin = Camera.ViewportSize.X
             local yMin = Camera.ViewportSize.Y
             local xMax = 0
             local yMax = 0
-            if returnVisibility(player) and teamType(player) ~= teamType(LocalPlayer) or FFA() and returnVisibility(player) then
+            if box and returnVisibility(player) and teamType(player) ~= teamType(LocalPlayer) or FFA() and returnVisibility(player) then
                 if player ~= LocalPlayer and player == getTarget() and playerCharacter and playerCharacter:FindFirstChild("Humanoid") and playerCharacter.Humanoid.Health > 0 then
                     local _, onScreen = Camera:WorldToScreenPoint(playerCharacter[getgenv().SelectedPart].Position)
                     if onScreen then
