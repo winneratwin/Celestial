@@ -606,7 +606,7 @@ RunServ:BindToRenderStep("Get_Target",1,function()
         fovVal.Value = Target
     end
     if UserInput:IsMouseButtonPressed(0) then
-        if Target ~= nil then
+        if Target then
             Hit = Target.Character[getgenv().SelectedPart]
         end
     else
