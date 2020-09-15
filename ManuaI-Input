@@ -653,6 +653,7 @@ local function updateEsp(player, folder)
             local yMax = 0
             if box and returnVisibility(player) and teamType(player) ~= teamType(LocalPlayer) or FFA() and returnVisibility(player) then
                 if player ~= LocalPlayer and player == getTarget() and playerCharacter and playerCharacter:FindFirstChild("Humanoid") and playerCharacter.Humanoid.Health > 0 then
+                    local box = folder:FindFirstChild(player.Name)
                     local _, onScreen = Camera:WorldToScreenPoint(playerCharacter[getgenv().SelectedPart].Position)
                     if onScreen then
                         box.Visible = true
