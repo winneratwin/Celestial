@@ -703,12 +703,12 @@ local function updateEsp(player, folder)
 end
 
 spawn(function()
-    RunServ:BindToRenderStep("Get_Rainbow",1,function()
+    repeat
         for Hue = 0,1,0.003 do
             getgenv().Rainbow = Color3.fromHSV(Hue,1,1)
             wait()
         end
-    end)
+    until false
 end)
 
 spawn(function()
