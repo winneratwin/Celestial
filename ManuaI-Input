@@ -547,10 +547,7 @@ print("Visibility Check: " .. tostring(getgenv().VisibiltyCheck))
 print("Target ESP: " .. tostring(getgenv().VisibiltyCheck))
 
 local function createBox(player)
-    local folder = Instance.new("Folder")
-	folder.Name = player.Name
-
-    local lines = Instance.new("Frame", folder)
+    local lines = Instance.new("Frame")
 	lines.Name = "Target_ESP"
 	lines.BackgroundTransparency = 1
     lines.AnchorPoint = Vector2.new(0.5,0.5)
@@ -559,22 +556,6 @@ local function createBox(player)
 	outlines.Name = "outlines"
 	local inlines = Instance.new("Folder", lines)
     inlines.Name = "inlines"
-    
-    local healthPos = Instance.new("Frame", folder)
-	healthPos.Name = "healthPos"
-    healthPos.BorderSizePixel = 1
-    healthPos.BorderColor3 = Color3.new(0,0,0)
-    healthPos.BackgroundColor3 = Color3.new(0,0,0)
-    healthPos.Position = UDim2.new(0,0,0,0)
-    healthPos.Size = UDim2.new(0,-5,0.1,0)
-    
-    local healthVal = Instance.new("Frame", healthPos)
-	healthVal.Name = "healthVal"
-    healthVal.BorderSizePixel = 1
-    healthVal.BorderColor3 = Color3.new(0,0,0)
-    healthVal.BackgroundColor3 = Color3.new(0,255,0)
-    healthVal.Position = UDim2.new(0,6,1,0)
-	healthVal.Size = UDim2.new(0,-5,0,-(player.Character.Humanoid.Health/player.Character.Humanoid.MaxHealth) * 100)
 
 	local outline1 = Instance.new("Frame", outlines)
 	outline1.Name = "left"
@@ -641,7 +622,7 @@ local function updateEsp(player, folder)
             local yMax = 0
             if returnVisibility(player) and teamType(player) ~= teamType(LocalPlayer) or FFA() and returnVisibility(player) then
                 if player ~= LocalPlayer and player == getTarget() and playerCharacter and playerCharacter:FindFirstChild("Humanoid") and playerCharacter.Humanoid.Health > 0 then
-                    local box = folder.Target_ESP
+                    local box = folder
                     local _, onScreen = Camera:WorldToScreenPoint(playerCharacter[getgenv().SelectedPart].Position)
                     if onScreen and box then
                         box.Visible = true
@@ -691,11 +672,9 @@ local function updateEsp(player, folder)
                         local ySize = yMax - yMin
                         box.Position = UDim2.new(0,xMin+(Vector2.new(xMax,0)-Vector2.new(xMin,0)).magnitude/2,0,yMin+(Vector2.new(0,yMax)-Vector2.new(0,yMin)).magnitude/2)
                         box.Size = UDim2.new(0,xSize,0,ySize)
-                        folder.healthPos.Position = UDim2.new(0,xMin+(Vector2.new(xMax,0)-Vector2.new(xMin,0)).magnitude*-xMin/5000,0,yMin+(Vector2.new(0,0,0)).magnitude)
-                        folder.healthPos.Size = UDim2.new(0,-5,0,ySize)
-                        folder.healthPos.healthVal.Size = UDim2.new(0,-5,0,-(player.Character.Humanoid.Health/player.Character.Humanoid.MaxHealth) * ySize)
                     end
                 else
+		    box.Visible = false
                 end
             end
         end)
