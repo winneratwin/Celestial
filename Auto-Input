@@ -182,6 +182,11 @@ elseif PlaceId == 4738545896 then
 elseif PlaceId == 3210442546 then
     selected_rigType = rigTypeR15
     selected_teamType = "IslandRoyale"
+elseif PlaceId == 401356052 then
+    selected_rigType = rigTypeKineticCode
+elseif PlaceId == 983224898 then
+    selected_teamType = "WildRevolvers"
+    selected_rigType = rigTypeR15
 elseif rigType == "R6" then
     selected_rigType = rigTypeR6
 elseif rigType == "R15" then
@@ -217,6 +222,20 @@ local function teamType(player)
         end
     elseif selected_teamType == "IslandRoyale" then
         return player:FindFirstChild("TeamName").Value
+    elseif selected_teamType == "WildRevolvers" then
+        if player == LocalPlayer then
+            return tostring(BrickColor.new(0, 255, 0))
+        else
+            for _, Player in next, game.Players:GetPlayers() do
+                if Player.Character then
+                    if Player.Character:FindFirstChild("Head") then
+                        if Player.Character == player.Character then
+                            return tostring(BrickColor.new(Player.Character.Head.HeadTag.Label.TextColor3))
+                        end
+                    end
+                end
+            end
+        end
     else
         if player.Team or player.TeamColor then
             local teamplayer = player.Team or player.TeamColor
