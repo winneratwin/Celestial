@@ -489,6 +489,7 @@ spawn(function()
         Circle.Color = getgenv().Rainbow
         lineX.Color = getgenv().Rainbow
         lineY.Color = getgenv().Rainbow
+	Circle.Radius = getgenv().FOV
         Circle.Position = Vector2.new(Mouse.X,Mouse.Y+Middle)
         TargetText.Position = Vector2.new(Mouse.X,Mouse.Y+Middle-180)
         lineX.From = Vector2.new((Mouse.X)+Length+1,Mouse.Y-0.5+Middle)
